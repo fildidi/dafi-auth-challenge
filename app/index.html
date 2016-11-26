@@ -17,6 +17,8 @@
 
         <!-- Application Entry: -->
         <div ui-view="root"></div>
+        <h1>Welcome to My Awesome App</h1>
+        <div id="firebaseui-auth-container"></div>
 
         <!-- Google Analytics: change UA-XXXXX-X to be your site's ID -->
         <script>
@@ -47,9 +49,12 @@
         <script src="bower_components/angular-busy/dist/angular-busy.js"></script>
         <script src="bower_components/angulartics/src/angulartics.js"></script>
         <script src="bower_components/angulartics-google-analytics/lib/angulartics-google-analytics.js"></script>
+        <script src="bower_components/firebase/firebase.js"></script>
+        <script src="bower_components/firebaseui/dist/firebaseui.js"></script>
+        <script src="bower_components/angularfire/dist/angularfire.js"></script>
         <!-- endbower -->
         <!-- endbuild -->
-
+        
 		<!-- build:js(app) scripts/scripts.js -->
 		<script src="config/app.js"></script>
 		<script src="config/config.js"></script>
@@ -63,6 +68,22 @@
 		<script src="modules/index/index.module.js"></script>
 		<script src="modules/index/index.route.js"></script>
 		<script src="modules/index/index.controller.js"></script>
+		<script src="modules/login/login.module.js"></script>
+		<script src="modules/login/login.route.js"></script>
+		<script src="modules/login/login.controller.js"></script>
+    
+    
+        <script>
+            var config = {
+                apiKey: "AIzaSyBwzc8f95rFzKCP9q4pgOVKDsC-NRAvudY",
+                authDomain: "dafi-fe-auth-challenge-fe.firebaseapp.com",
+                databaseURL: "https://dafi-fe-auth-challenge-fe.firebaseio.com",
+                storageBucket: "dafi-fe-auth-challenge-fe.appspot.com",
+                messagingSenderId: "965272662694"
+            };
+            firebase.initializeApp(config);
+        </script>
 		<!-- endbuild -->
+        
 </body>
 </html>
