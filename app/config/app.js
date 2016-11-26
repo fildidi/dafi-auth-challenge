@@ -23,6 +23,8 @@
 			'config',
 			'application',
 			'index',
+			'firebase',
+			'login',
 			/* ---> Do not delete this comment (ngImports) <--- */
 	]);
 })();
