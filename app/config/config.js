@@ -13,6 +13,16 @@
 		'angular-loading-bar',
 		'cgBusy'
 	]);
+	
+	var configFirebase = {
+		apiKey           : "AIzaSyBwzc8f95rFzKCP9q4pgOVKDsC-NRAvudY",
+		authDomain       : "dafi-fe-auth-challenge-fe.firebaseapp.com",
+		databaseURL      : "https://dafi-fe-auth-challenge-fe.firebaseio.com",
+		storageBucket    : "dafi-fe-auth-challenge-fe.appspot.com",
+		messagingSenderId: "965272662694"
+	}
+	
+	firebase.initializeApp(configFirebase);
 
 	core.value('cgBusyDefaults', {
 		message:'Loading Stuff',
