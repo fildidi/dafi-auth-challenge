@@ -25,6 +25,7 @@
 			'index',
 			'firebase',
 			'login',
+			'user',
 			/* ---> Do not delete this comment (ngImports) <--- */
 	]);
 })();

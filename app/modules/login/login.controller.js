@@ -27,6 +27,7 @@
 			console.log(form);
 			if(!form.$invalid){
 				vm.authObj.$signInWithEmailAndPassword(vm.email, vm.password).then(function(firebaseUser) {
+					//create user
 					console.log('firebaseUser',firebaseUser);
 					console.log("Signed in as:", firebaseUser.uid);
 				}).catch(function(error) {
@@ -39,6 +40,7 @@
 			console.log(form);
 			vm.authObj.$createUserWithEmailAndPassword(vm.email, vm.password)
 				.then(function(firebaseUser) {
+					//create user
 					console.log("User " + firebaseUser.uid + " created successfully!");
 				}).catch(function(error) {
 				console.error("Error: ", error);
@@ -47,8 +49,10 @@
 		
 		function singInFb() {
 			console.log("inside facebook");
-			vm.authObj.$signInWithPopup("facebook").then(function(result) {
-				console.log("Facebook Signed in as:", result.user.uid);
+			vm.authObj.$signInWithPopup("facebook").then(function(facebookUser) {
+				//create user
+				console.log(facebookUser)
+				console.log("Facebook Signed in as:", facebookUser.user.uid);
 			}).catch(function(error) {
 				console.error("Authentication failed:", error);
 			});
