@@ -20,18 +20,18 @@
 	
 	
 	/* @ngInject */
-	function User($exceptionHandler, ROLES) {
+	function User($exceptionHandler, ROLES, $rootScope, $state) {
 		var currentUser = null;
 		
 		var service = {
 			setLoginInfo: setLoginInfo,
-			currentUser: currentUser
+			currentUser : currentUser
 		};
 		
 		return service;
 		
 		function setLoginInfo(providerUser, token) {
-			if(!providerUser || !token){
+			if(!providerUser || !token) {
 				throw $exceptionHandler('setLoginInfo is missing providerUser or token');
 			}
 			setUser(providerUser);

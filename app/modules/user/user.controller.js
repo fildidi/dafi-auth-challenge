@@ -1,29 +1,26 @@
 (function() {
 	'use strict';
-	
+
 	/**
-	 * @name home
+	 * @name
+	 * @author
 	 * @description
 	 *
-	 * Index Controller
 	 */
 	angular
-		.module('home')
-		.controller('Home', Home);
-	
+		.module('user')
+		.controller('UserController', User);
+
 	/* @ngInject */
-	function Home() {
+	function User() {
 		/*jshint validthis: true */
 		var vm = this;
-		
+
 		activate();
-		
+
 		function activate() {
-			
-			
+
 		}
-		
-		
 	}
-	
+
 })();

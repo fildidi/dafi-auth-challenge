@@ -1,6 +1,6 @@
 (function() {
 	'use strict';
-
+	
 	/**
 	 * @name dafi-auth-challenge
 	 * @description
@@ -10,8 +10,21 @@
 	angular
 		.module('dafi-auth-challenge')
 		.run(run);
-
-	function run($state, $rootScope) {
-
+	
+	function run($state, $rootScope, UserService) {
+		
+		$rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams) {
+			
+			console.log("inside $routeChangeStart");
+			console.log(toState);
+			if(toState.name !== 'application.login') {
+				console.log("insideeeeeeeeeee");
+				if(!localStorage.getItem('tokenn')) {
+					console.log("inside else cause there is NO token");
+					event.preventDefault();
+					$state.go('application.login');
+				}
+			}
+		});
 	}
 })();
