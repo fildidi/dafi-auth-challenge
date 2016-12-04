@@ -22,10 +22,11 @@
 			'ngStorage',
 			'config',
 			'application',
-			'index',
+			'home',
 			'firebase',
 			'login',
 			'user',
+			'home',
 			/* ---> Do not delete this comment (ngImports) <--- */
 	]);
 })();

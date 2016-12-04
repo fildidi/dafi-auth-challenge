@@ -2,25 +2,25 @@
 	'use strict';
 
 	/**
-	 * @name index
+	 * @name home
 	 * @description
 	 *
 	 * Index Controller
 	 */
 	angular
-		.module('index')
-		.controller('Index', Index);
+		.module('home')
+		.controller('Home', Home);
 
 	/* @ngInject */
-	function Index() {
+	function Home(UserService) {
 		/*jshint validthis: true */
 		var vm = this;
 
 		activate();
 
 		function activate() {
-
 		}
+		
 	}
 
 })();

@@ -2,23 +2,23 @@
 	'use strict';
 
 	/**
-	 * @name index
+	 * @name home
 	 * @description
 	 *
-	 * Index state configuration
+	 * Home state configuration
 	 */
-	angular.module('index')
+	angular.module('home')
 		/* @ngInject */
 		.config(function ($stateProvider) {
 
 			var Index = {
-				name: 'application.index',
+				name: 'application.home',
 				url: '/',
 				views: {
 					'application@application': {
-						templateUrl: 'modules/index/index.template.html',
-						controller: 'Index',
-						controllerAs: 'index'
+						templateUrl: 'modules/home/home.template.html',
+						controller: 'Home',
+						controllerAs: 'home'
 					}
 				}
 			};

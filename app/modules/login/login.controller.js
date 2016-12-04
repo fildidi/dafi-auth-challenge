@@ -12,7 +12,9 @@
 		.controller('LoginController', Login);
 	
 	/* @ngInject */
-	function Login($firebaseAuth) {
+	function Login($firebaseAuth, UserService) {
+		
+		console.log("insdie login controller");
 		/*jshint validthis: true */
 		var vm = this;
 		vm.authObj = $firebaseAuth();
@@ -30,6 +32,8 @@
 					//create user
 					console.log('firebaseUser',firebaseUser);
 					console.log("Signed in as:", firebaseUser.uid);
+					UserService.setLoginInfo(firebaseUser.providerData[0], firebaseUser.refreshToken);
+					console.log(firebaseUser.providerData);
 				}).catch(function(error) {
 					console.error("Authentication failed:", error);
 				});
@@ -42,6 +46,8 @@
 				.then(function(firebaseUser) {
 					//create user
 					console.log("User " + firebaseUser.uid + " created successfully!");
+					console.log('firebaseUser', firebaseUser);
+					UserService.setLoginInfo(firebaseUser.providerData[0], firebaseUser.refreshToken);
 				}).catch(function(error) {
 				console.error("Error: ", error);
 			});
@@ -53,10 +59,12 @@
 				//create user
 				console.log(facebookUser)
 				console.log("Facebook Signed in as:", facebookUser.user.uid);
+				UserService.setLoginInfo(facebookUser.user.providerData[0], facebookUser.credential.accessToken);
 			}).catch(function(error) {
 				console.error("Authentication failed:", error);
 			});
 		}
+		
 	}
 	
 })();
