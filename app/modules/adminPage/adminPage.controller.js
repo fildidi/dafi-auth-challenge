@@ -1,6 +1,6 @@
 (function() {
 	'use strict';
-	
+
 	/**
 	 * @name
 	 * @author
@@ -8,23 +8,20 @@
 	 *
 	 */
 	angular
-		.module('userPage')
-		.controller('UserPageController', UserPage);
-	
+		.module('adminPage')
+		.controller('AdminPageController', AdminPageController);
+
 	/* @ngInject */
-	function UserPage(UserService, $state) {
+	function AdminPageController(UserService, $state) {
 		/*jshint validthis: true */
 		var vm = this;
-		
-		vm.goToState = goToState;
+		vm.goToState =goToState;
 		
 		vm.currentUser = UserService.currentUser;
-		console.log('currentUser', UserService.currentUser);
-		
+		console.log('currentUser',UserService.currentUser);
 		function goToState() {
 			$state.go('application.sharedPage');
 		}
-		
 	}
-	
+
 })();

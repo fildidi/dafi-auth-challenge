@@ -35,7 +35,7 @@
 					console.log('firebaseUser', firebaseUser);
 					console.log("Signed in as:", firebaseUser.uid);
 					UserService.setLoginInfo(firebaseUser.refreshToken);
-					$state.go('application.userPage');
+					gotToPage(UserService.currentUser);
 				}).catch(function(error) {
 					console.error("Authentication failed:", error);
 				});
@@ -56,7 +56,7 @@
 					}).then(function() {
 						// Update successful.
 						UserService.setLoginInfo(firebaseUser.refreshToken);
-						$state.go('application.userPage');
+						gotToPage(UserService.currentUser);
 					}, function(error) {
 						// An error happened.
 						console.error("Error: ", error);
@@ -74,10 +74,23 @@
 				console.log(facebookUser)
 				console.log("Facebook Signed in as:", facebookUser.user.uid);
 				UserService.setLoginInfo(facebookUser.credential.accessToken);
-				$state.go('application.userPage');
+				gotToPage(UserService.currentUser);
 			}).catch(function(error) {
 				console.error("Authentication failed:", error);
 			});
+		}
+		
+		function gotToPage(user) {
+			switch(user.options.currentRole) {
+				case 'USER': {
+					$state.go('application.userPage');
+					break;
+				}
+				case 'ADMIN': {
+					$state.go('application.adminPage');
+					break;
+				}
+			}
 		}
 		
 	}

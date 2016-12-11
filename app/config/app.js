@@ -28,6 +28,8 @@
 			'user',
 			'userPage',
 			'home',
+			'adminPage',
+			'sharedPage',
 			/* ---> Do not delete this comment (ngImports) <--- */
 	]);
 })();
