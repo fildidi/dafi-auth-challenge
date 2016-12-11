@@ -20,6 +20,8 @@
 	function NavbarDafiComponent(UserService, ROLES) {
 		/*jshint validthis: true */
 		var vm = this;
+		vm.showBackBtn = false;
+		
 		vm.logOut =logOut;
 		vm.logInAsUser = logInAsUser;
 		console.log("inside NavbarDafiComponent");
