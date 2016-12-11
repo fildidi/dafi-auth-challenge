@@ -20,7 +20,8 @@
 						controller: 'UserPageController',
 						controllerAs: 'userPage'
 					}
-				}
+				},
+				authenticate: true
 			};
 
 			$stateProvider.state(UserPage);

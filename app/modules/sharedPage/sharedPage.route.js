@@ -20,7 +20,8 @@
 						controller: 'SharedPageController',
 						controllerAs: 'sharedPage'
 					}
-				}
+				},
+				authenticate: true
 			};
 
 			$stateProvider.state(SharedPageRoute);

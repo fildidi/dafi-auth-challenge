@@ -1,0 +1,9 @@
+<div class="navbar">
+    <button ui-sref="application.home">Home</button>
+    <button ng-if="$ctrl.userService.currentUser.options.currentRole === $ctrl.roles.USER" ui-sref="application.userPage">UserPage</button>
+    <button ng-if="$ctrl.userService.currentUser.options.currentRole === $ctrl.roles.ADMIN" ui-sref="application.adminPage">AdminPage</button>
+    <button ng-if="$ctrl.userService.currentUser" ui-sref="application.sharedPage">SharedPage</button>
+    <button ng-if="$ctrl.userService.currentUser.options.currentRole === $ctrl.roles.ADMIN" ng-click="$ctrl.logInAsUser()">Log in as user</button>
+    <button ng-if="$ctrl.userService.currentUser.options.currentRole === $ctrl.roles.ADMIN" ng-click="$ctrl.logInAsUser()">Back to admin</button>
+    <button ng-if="$ctrl.userService.currentUser" ng-click="$ctrl.logOut()">LogOut</button>
+</div>

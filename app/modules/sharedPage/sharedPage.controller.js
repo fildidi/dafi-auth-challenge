@@ -19,8 +19,7 @@
 		vm.currentUser = UserService.currentUser;
 		
 		vm.roles = ROLES;
-		
-		
+	
 	}
 
 })();

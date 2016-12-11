@@ -20,11 +20,13 @@
 	
 	
 	/* @ngInject */
-	function UserService($exceptionHandler, ROLES, $rootScope, $state) {
+	function UserService($exceptionHandler, ROLES, $firebaseAuth, $state) {
 		
 		var service = {
 			setLoginInfo: setLoginInfo,
-			currentUser : {}
+			signOut     : signOut,
+			switchRoles: switchRoles,
+			currentUser : undefined
 		};
 		
 		return service;
@@ -33,15 +35,21 @@
 			if(!token) {
 				throw $exceptionHandler('setLoginInfo is missing providerUser or token');
 			}
+			
 			var user = firebase.auth().currentUser;
+			
 			service.currentUser = {
-				info   : user,
-				options: {}
+				info     : user,
+				options  : {},
+				functions: {
+					signOut: signOut
+				}
 			};
+			
 			setUserRole(service.currentUser);
 			
 			//todo USE WRAPPER
-			localStorage.setItem('tokenn', token);
+			localStorage.setItem('token', token);
 		}
 		
 		function setUserRole(user) {
@@ -62,6 +70,29 @@
 				}
 			}
 		}
+		
+		function signOut() {
+			firebase.auth().signOut().then(function() {
+				//remove token from localstorage
+				localStorage.removeItem('token');
+				//remove current user
+				service.currentUser = undefined;
+				$state.go('application.home')
+			})
+		}
+		
+		function switchRoles() {
+			if(service.currentUser.options.fireBaseRole === ROLES.ADMIN){
+				console.log("inside switchRoles");
+				if(service.currentUser.options.currentRole === ROLES.ADMIN){
+					service.currentUser.options.currentRole = ROLES.USER;
+				}else {
+					service.currentUser.options.currentRole = ROLES.ADMIN;
+				}
+				
+			}
+		}
+		
 	}
 	
 })();

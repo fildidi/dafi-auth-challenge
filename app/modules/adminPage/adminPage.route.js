@@ -20,7 +20,8 @@
 						controller: 'AdminPageController',
 						controllerAs: 'adminPage'
 					}
-				}
+				},
+				authenticate: true
 			};
 
 			$stateProvider.state(AdminPageRoute);

@@ -30,6 +30,7 @@
 			'home',
 			'adminPage',
 			'sharedPage',
+			'navbarDafi',
 			/* ---> Do not delete this comment (ngImports) <--- */
 	]);
 })();
