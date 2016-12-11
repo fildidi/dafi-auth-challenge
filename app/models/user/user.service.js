@@ -16,62 +16,52 @@
 	angular
 		.module('user')
 		.constant('ROLES', roles)
-		.service('UserService', User);
+		.service('UserService', UserService);
 	
 	
 	/* @ngInject */
-	function User($exceptionHandler, ROLES, $rootScope, $state) {
-		var currentUser = null;
+	function UserService($exceptionHandler, ROLES, $rootScope, $state) {
 		
 		var service = {
 			setLoginInfo: setLoginInfo,
-			currentUser : currentUser
+			currentUser : {}
 		};
 		
 		return service;
 		
-		function setLoginInfo(providerUser, token) {
-			if(!providerUser || !token) {
+		function setLoginInfo(token) {
+			if(!token) {
 				throw $exceptionHandler('setLoginInfo is missing providerUser or token');
 			}
-			setUser(providerUser);
-			
-			var token = localStorage.setItem('tokenn', token);
-			
-		}
-		
-		function setUser(user) {
-			if(!user) {
-				throw $exceptionHandler("setUser - there is no such user");
-			}
-			currentUser = {
+			var user = firebase.auth().currentUser;
+			service.currentUser = {
 				info   : user,
 				options: {}
 			};
-			setUserRole(currentUser);
-			console.log("inside service", currentUser);
+			setUserRole(service.currentUser);
+			
+			//todo USE WRAPPER
+			localStorage.setItem('tokenn', token);
 		}
 		
-		function setUserRole(currentUser) {
-			if(!currentUser) {
+		function setUserRole(user) {
+			if(!user) {
 				throw $exceptionHandler("setUserRole - there is no such user");
 			}
 			
-			switch(currentUser.info.providerId) {
+			switch(user.info.providerData[0].providerId) {
 				case 'facebook.com': {
-					currentUser.options.fireBaseRole = ROLES.ADMIN;
-					currentUser.options.currentRole = ROLES.ADMIN;
+					user.options.fireBaseRole = ROLES.ADMIN;
+					user.options.currentRole = ROLES.ADMIN;
 					break;
 				}
 				case 'password': {
-					currentUser.options.fireBaseRole = ROLES.USER;
-					currentUser.options.currentRole = ROLES.USER;
+					user.options.fireBaseRole = ROLES.USER;
+					user.options.currentRole = ROLES.USER;
 					break;
 				}
 			}
 		}
-		
-		
 	}
 	
 })();

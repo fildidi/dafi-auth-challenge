@@ -20,6 +20,9 @@
 						controller: 'LoginController',
 						controllerAs: 'login'
 					}
+				},
+				params:{
+					showRegister: null
 				}
 			};
 

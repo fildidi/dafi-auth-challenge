@@ -12,14 +12,16 @@
 		.controller('LoginController', Login);
 	
 	/* @ngInject */
-	function Login($firebaseAuth, UserService) {
+	function Login($firebaseAuth, UserService, $stateParams, $state) {
 		
-		console.log("insdie login controller");
+		console.log("inside login controller");
 		/*jshint validthis: true */
 		var vm = this;
 		vm.authObj = $firebaseAuth();
 		vm.email = undefined;
 		vm.password = undefined;
+		vm.name = undefined;
+		vm.showRegister = $stateParams.showRegister;
 		
 		vm.signInEmail = signInEmail;
 		vm.singInFb = singInFb;
@@ -27,13 +29,13 @@
 		
 		function signInEmail(form) {
 			console.log(form);
-			if(!form.$invalid){
+			if(!form.$invalid) {
 				vm.authObj.$signInWithEmailAndPassword(vm.email, vm.password).then(function(firebaseUser) {
 					//create user
-					console.log('firebaseUser',firebaseUser);
+					console.log('firebaseUser', firebaseUser);
 					console.log("Signed in as:", firebaseUser.uid);
-					UserService.setLoginInfo(firebaseUser.providerData[0], firebaseUser.refreshToken);
-					console.log(firebaseUser.providerData);
+					UserService.setLoginInfo(firebaseUser.refreshToken);
+					$state.go('application.userPage');
 				}).catch(function(error) {
 					console.error("Authentication failed:", error);
 				});
@@ -47,7 +49,19 @@
 					//create user
 					console.log("User " + firebaseUser.uid + " created successfully!");
 					console.log('firebaseUser', firebaseUser);
-					UserService.setLoginInfo(firebaseUser.providerData[0], firebaseUser.refreshToken);
+					
+					firebase.auth().currentUser.updateProfile({
+						displayName: vm.name,
+						photoURL   : ""
+					}).then(function() {
+						// Update successful.
+						UserService.setLoginInfo(firebaseUser.refreshToken);
+						$state.go('application.userPage');
+					}, function(error) {
+						// An error happened.
+						console.error("Error: ", error);
+					});
+					
 				}).catch(function(error) {
 				console.error("Error: ", error);
 			});
@@ -59,7 +73,8 @@
 				//create user
 				console.log(facebookUser)
 				console.log("Facebook Signed in as:", facebookUser.user.uid);
-				UserService.setLoginInfo(facebookUser.user.providerData[0], facebookUser.credential.accessToken);
+				UserService.setLoginInfo(facebookUser.credential.accessToken);
+				$state.go('application.userPage');
 			}).catch(function(error) {
 				console.error("Authentication failed:", error);
 			});

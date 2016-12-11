@@ -15,11 +15,11 @@
 	]);
 	
 	var configFirebase = {
-		apiKey           : "AIzaSyBwzc8f95rFzKCP9q4pgOVKDsC-NRAvudY",
-		authDomain       : "dafi-fe-auth-challenge-fe.firebaseapp.com",
-		databaseURL      : "https://dafi-fe-auth-challenge-fe.firebaseio.com",
-		storageBucket    : "dafi-fe-auth-challenge-fe.appspot.com",
-		messagingSenderId: "965272662694"
+		apiKey           : "AIzaSyBV3CqdwudjH2xSfTI6Qr3WVbo4pWeoPsw",
+		authDomain       : "fe-auth-challenge.firebaseapp.com",
+		databaseURL      : "https://fe-auth-challenge.firebaseio.com",
+		storageBucket    : "fe-auth-challenge.appspot.com",
+		messagingSenderId: "351822589592"
 	}
 	
 	firebase.initializeApp(configFirebase);

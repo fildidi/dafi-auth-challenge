@@ -26,6 +26,7 @@
 			'firebase',
 			'login',
 			'user',
+			'userPage',
 			'home',
 			/* ---> Do not delete this comment (ngImports) <--- */
 	]);
