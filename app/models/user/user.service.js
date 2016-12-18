@@ -35,6 +35,10 @@
 			
 			var user = firebase.auth().currentUser;
 			
+			var time = new Date ();
+			var exp_time = new Date (time);
+			//exp_time.setHours(time.getHours() + 1)
+			
 			console.log(user)
 			service.currentUser = {
 				info     : user,
@@ -48,6 +52,7 @@
 			if(token) {
 			// 	//todo USE WRAPPER
 				localStorage.setItem('token', token);
+				localStorage.setItem('exp_time', exp_time.setHours(time.getHours() + 1) )
 			}
 		}
 		
@@ -74,13 +79,15 @@
 		
 		function signOut() {
 			
-			if(service.currentUser.options.currentRole !== service.currentUser.options.fireBaseRole){
+			if(service.currentUser && service.currentUser.options.currentRole !== service.currentUser.options.fireBaseRole){
 				console.log("inside if");
 				service.switchRoles();
 				$state.go('application.adminPage');
 			}else{
 				
 				firebase.auth().signOut().then(function() {
+					localStorage.removeItem('exp_time');
+					localStorage.removeItem('token');
 					service.currentUser = undefined;
 					$state.go('application.home');
 				})

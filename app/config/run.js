@@ -13,16 +13,20 @@
 	
 	function run($state, $rootScope, UserService, $firebaseAuth) {
 		var authObj = $firebaseAuth();
-		
-		$rootScope.$on("$stateChangeStart", function(event, toState, toParams, fromState, fromParams){
-			//$rootScope.previousState = from;
-			console.log('toState.authenticate',toState.authenticate);
-			if (toState.authenticate){
-				if(!UserService.currentUser){
+		$rootScope.$on("$stateChangeStart", function(event, toState, toParams, fromState, fromParams) {
+			console.log('toState.authenticate', toState.authenticate);
+			if(toState.authenticate || localStorage.getItem('token')) {
+				if(localStorage.getItem('token')) {
+					var expiredTime = localStorage.getItem('exp_time');
+					if(expiredTime < new Date()) {
+						UserService.signOut();
+					}
+				}
+				if(!UserService.currentUser) {
 					// UserService.loadUserFromFirebase();
 					event.preventDefault();
 					authObj.$onAuthStateChanged(function(firebaseUser) {
-						if (firebaseUser) {
+						if(firebaseUser) {
 							UserService.setLoginInfo();
 							console.log("Signed in as:", firebaseUser.uid);
 						} else {
@@ -33,15 +37,16 @@
 			}
 		});
 		
-		var previousState =null
-		$rootScope.$on('$stateChangeSuccess', function (ev, to, toParams, from, fromParams) {
-			if(to === previousState){
-				if(UserService.currentUser.options.fireBaseRole !== UserService.currentUser.options.currentRole) {
+		var previousState = null;
+		$rootScope.$on('$stateChangeSuccess', function(ev, to, toParams, from, fromParams) {
+			if(to === previousState) {
+				if(UserService.currentUser && UserService.currentUser.options.fireBaseRole !== UserService.currentUser.options.currentRole) {
 					UserService.signOut();
 				}
-			}else{
+			} else {
 				previousState = from;
 			}
+			
 		});
 	}
 })();
