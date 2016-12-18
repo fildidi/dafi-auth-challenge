@@ -22,6 +22,7 @@
 		vm.password = undefined;
 		vm.name = undefined;
 		vm.showRegister = $stateParams.showRegister;
+		vm.checked = undefined;
 		
 		vm.signInEmail = signInEmail;
 		vm.singInFb = singInFb;
@@ -34,8 +35,11 @@
 					//create user
 					console.log('firebaseUser', firebaseUser);
 					console.log("Signed in as:", firebaseUser.uid);
-					UserService.setLoginInfo(firebaseUser.refreshToken);
-					gotToPage(UserService.currentUser);
+					var token = null;
+					if(vm.checked){
+						token = firebaseUser.refreshToken;
+					}
+					UserService.setLoginInfo(token);
 				}).catch(function(error) {
 					console.error("Authentication failed:", error);
 				});
@@ -56,7 +60,6 @@
 					}).then(function() {
 						// Update successful.
 						UserService.setLoginInfo(firebaseUser.refreshToken);
-						gotToPage(UserService.currentUser);
 					}, function(error) {
 						// An error happened.
 						console.error("Error: ", error);
@@ -74,26 +77,10 @@
 				console.log(facebookUser)
 				console.log("Facebook Signed in as:", facebookUser.user.uid);
 				UserService.setLoginInfo(facebookUser.credential.accessToken);
-				gotToPage(UserService.currentUser);
 			}).catch(function(error) {
 				console.error("Authentication failed:", error);
 			});
 		}
-		
-		function gotToPage(user) {
-			switch(user.options.currentRole) {
-				case 'USER': {
-					$state.go('application.userPage');
-					break;
-				}
-				case 'ADMIN': {
-					$state.go('application.adminPage');
-					break;
-				}
-			}
-		}
-	
-		
 	}
 	
 })();

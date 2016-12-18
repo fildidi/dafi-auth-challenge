@@ -11,16 +11,36 @@
 		.module('dafi-auth-challenge')
 		.run(run);
 	
-	function run($state, $rootScope, UserService) {
+	function run($state, $rootScope, UserService, $firebaseAuth) {
+		var authObj = $firebaseAuth();
 		
 		$rootScope.$on("$stateChangeStart", function(event, toState, toParams, fromState, fromParams){
+			//$rootScope.previousState = from;
 			console.log('toState.authenticate',toState.authenticate);
 			if (toState.authenticate){
-				// User isn’t authenticated
 				if(!UserService.currentUser){
-					$state.go('application.login');
+					// UserService.loadUserFromFirebase();
 					event.preventDefault();
+					authObj.$onAuthStateChanged(function(firebaseUser) {
+						if (firebaseUser) {
+							UserService.setLoginInfo();
+							console.log("Signed in as:", firebaseUser.uid);
+						} else {
+							$state.go('application.login')
+						}
+					});
 				}
+			}
+		});
+		
+		var previousState =null
+		$rootScope.$on('$stateChangeSuccess', function (ev, to, toParams, from, fromParams) {
+			if(to === previousState){
+				if(UserService.currentUser.options.fireBaseRole !== UserService.currentUser.options.currentRole) {
+					UserService.signOut();
+				}
+			}else{
+				previousState = from;
 			}
 		});
 	}
